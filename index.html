@@ -32,14 +32,17 @@
    </div> 
   </div>
   <script>
+      var id;
       function mymove(){
-        
+        if (id != null) {
+            clearInterval(id);
+        }
         var elem =document.getElementById("animate");
         var pos=0;
         var side= 0;
         elem.style.top = 0;
         elem.style.left = 0;
-        var id = setInterval(frame,5);
+        id = setInterval(frame,5);
         function frame (){
             if (side==0&&pos<=350){
             pos++;
