@@ -71,9 +71,14 @@
         }
         .buttoncss[data-title]:hover:after{
             content: attr(data-title);
-            background: rgb(134, 128, 128); 
-            position: relative;
-            top: 20px;
+            background: rgb(134, 128, 128);
+            position: absolute;
+            right: 0;    
+            top: -18px;
+            width: 155px;
+            border: 1px red solid;
+            border-radius: 12%;
+            box-shadow: 6px 2px 11px 0px #888888;
         }
         .add_todo:hover{
             background-color: #4da099;
@@ -89,17 +94,21 @@
             width: 333px;
             height: 36px;
             margin: 8px;
+            border-radius: 20px;
+        }
+       .create_relative{
+            position: relative;
         }
     </style>
 </head>
 <body style="height: 100%;">
     
-    <div class = "main">
+    <div class = "main" style="margin: auto;">
 
        <div class = "top">
            <h4>TODOWEB</h4>
        </div>
-       <div id = "createtodo" class = "in"  style="position: relative;">
+       <div id = "createtodo" class = "in"  >
            <input type="text" class="add_todo_input">
            <button class="add_todo" onclick="addTodo()" data-title="click to create todo">+</button>
        </div>
@@ -117,11 +126,14 @@
             as.forEach((x, i) => {
                 var htmll = ` 
                 <li>
-                       <div class="todo_element">
-                                ${x}
-                        </div>
-                        <button class = "buttoncss"onclick='deleteTodo(${i})' data-title="click here to delete">x</button>
+                    <div class="todo_element">
+                        ${x}
+                    </div>
+                    <div class = "create_relative">
+                        <button class = "buttoncss" onclick='deleteTodo(${i})' data-title="click here to delete">x</button>
+                    </div>
                </li>`
+               
                 newar = newar+ htmll;
                 
             })
