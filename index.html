@@ -1,68 +1,163 @@
-<!doctype html>
-<html>
- <head>
-     <style>
-         #container{
-        width:400px;
-        height:400px;
-        position:relative;
-        background:yellow;
+<!DOCTYPE html>
+<html lang="en" style="height: 90%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODOWEB</title>
+    <style>
+        .main{
+            width: 500px;
+            height: 100%;
+            border: 5px solid rgb(115, 132, 168);
+            background-color: rgb(158 45 45);
         }
-        #animate{
-        width:50px;
-        height:50px;
-        position:absolute;
-        background:red;
-        border-radius:25px;
+        .top{
+            width: 400px;
+            height: 50px;
+            margin: auto;
+            border: 5px solid rgb(115, 132, 168);
+            border-top: 0px;
+            background-color: rgb(255, 255, 255);
         }
-        .face{
-        text-align: center;
-        font-size:30px;
+        h4{
+            width: 200px;
+            height: 50px;
+            margin-top: 0px;
+            margin: auto;
+            margin-right: auto;
+            font-size: 40px;
+            color: rgba(0, 0, 0, 0.425);
         }
-     </style>
- </head> 
- <body> 
-  <h1>this is my animation </h1> 
-  <p><button onclick="mymove()">click here</button></p> 
-  <div id="container"> 
-   <div id="animate"> 
-    <div class="face"> 
-     <strong>^_^</strong> 
-    </div> 
-   </div> 
-  </div>
-  <script>
-      var id;
-      function mymove(){
-        if (id != null) {
-            clearInterval(id);
+        .in{
+            position: relative;
+            width: 210px;
+            background: white;
+            margin: 0 48px;
+            width: 404px;
         }
-        var elem =document.getElementById("animate");
-        var pos=0;
-        var side= 0;
-        elem.style.top = 0;
-        elem.style.left = 0;
-        id = setInterval(frame,5);
-        function frame (){
-            if (side==0&&pos<=350){
-            pos++;
-            elem.style.top = pos+"px";
+
+        li {
+            
+            word-break: break-all;
+            
+        }
+        .todo_element{
+            width:300px;
+        }
+        .buttoncss{
+            margin-left: 300px;
+            
+        }
+        .buttoncss:hover {
+            background-color: #4da099;
+            color: rgb(255, 255, 255);
+        }
+        .add_todo {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            box-shadow: 1px 2px 20px 2px black;
+            border: 0.3px solid black;
+        }
+        .add_todo[data-title]:hover::after{
+            content: attr(data-title);
+            background: rgb(134, 128, 128);
+            position: absolute;
+            top: 0;
+            width: 155px;
+            border: 1px red solid;
+            border-radius: 12%;
+            box-shadow: 6px 2px 11px 0px #888888;
+        }
+        .buttoncss[data-title]:hover:after{
+            content: attr(data-title);
+            background: rgb(134, 128, 128);
+            position: absolute;
+            right: 0;    
+            top: -18px;
+            width: 155px;
+            border: 1px red solid;
+            border-radius: 12%;
+            box-shadow: 6px 2px 11px 0px #888888;
+        }
+        .add_todo:hover{
+            background-color: #4da099;
+            color: rgb(255, 255, 255);
+        }
+        .todo_list {
+            height: 80%;
+            overflow-y: auto;
+            margin: 0 48px;
+            background: white;
+        }
+        .add_todo_input {
+            width: 333px;
+            height: 36px;
+            margin: 8px;
+            border-radius: 20px;
+        }
+       .create_relative{
+            position: relative;
+        }
+    </style>
+</head>
+<body style="height: 100%;">
+    
+    <div class = "main" style="margin: auto;">
+
+       <div class = "top">
+           <h4>TODOWEB</h4>
+       </div>
+       <div id = "createtodo" class = "in"  >
+           <input type="text" class="add_todo_input">
+           <button class="add_todo" onclick="addTodo()" data-title="click to create todo">+</button>
+       </div>
+       <div class="todo_list">
+           <ol id = "list">
+             
+           </ol>
+       </div>
+    </div>
+   <script>
+       var print = console.log;
+        var tolist = [];
+        function sendingtolist(as){
+            var newar = '';
+            as.forEach((x, i) => {
+                var htmll = ` 
+                <li>
+                    <div class="todo_element">
+                        ${x}
+                    </div>
+                    <div class = "create_relative">
+                        <button class = "buttoncss" onclick='deleteTodo(${i})' data-title="click here to delete">x</button>
+                    </div>
+               </li>`
+               
+                newar = newar+ htmll;
+                
+            })
+            ollist.innerHTML = newar;
+
+        }
+        var divelem = document.getElementById("createtodo");
+        var ollist = document.getElementById("list");
+        var inputEle= divelem.getElementsByTagName('input');
+        var buttonEle= divelem.getElementsByTagName('button');
+
+        function addTodo() {
+            if (inputEle[0].value != ''){
+                tolist.push(inputEle[0].value);
+                inputEle[0].value = null; 
+                sendingtolist(tolist)
+
             }
-            else if(pos>=350&&side<=350){
-            side++;
-            elem.style.left=side+"px";
-            }
-            else if (pos>0 && side==351){
-            pos--;
-            elem.style.top=pos+"px";
-            }
-            else if (pos==0 && side>0){
-            side--;
-            elem.style.left=side+"px";
-            }
         }
+
+        function deleteTodo(index) {
+            tolist.splice(index, 1);
+            sendingtolist(tolist);
         }
-  </script> 
-  <a href="todo.html">  TODOWEb</a>
- </body>
+   </script> 
+</body>
 </html>

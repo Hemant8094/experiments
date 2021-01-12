@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+ <head>
+     <style>
+         #container{
+        width:400px;
+        height:400px;
+        position:relative;
+        background:yellow;
+        }
+        #animate{
+        width:50px;
+        height:50px;
+        position:absolute;
+        background:red;
+        border-radius:25px;
+        }
+        .face{
+        text-align: center;
+        font-size:30px;
+        }
+     </style>
+ </head> 
+ <body> 
+  <h1>this is my animation </h1> 
+  <p><button onclick="mymove()">click here</button></p> 
+  <div id="container"> 
+   <div id="animate"> 
+    <div class="face"> 
+     <strong>^_^</strong> 
+    </div> 
+   </div> 
+  </div>
+  <script>
+      var id;
+      function mymove(){
+        if (id != null) {
+            clearInterval(id);
+        }
+        var elem =document.getElementById("animate");
+        var pos=0;
+        var side= 0;
+        elem.style.top = 0;
+        elem.style.left = 0;
+        id = setInterval(frame,5);
+        function frame (){
+            if (side==0&&pos<=350){
+            pos++;
+            elem.style.top = pos+"px";
+            }
+            else if(pos>=350&&side<=350){
+            side++;
+            elem.style.left=side+"px";
+            }
+            else if (pos>0 && side==351){
+            pos--;
+            elem.style.top=pos+"px";
+            }
+            else if (pos==0 && side>0){
+            side--;
+            elem.style.left=side+"px";
+            }
+        }
+        }
+  </script> 
+  <a href="todo.html">  TODOWEb</a>
+ </body>
+</html>
