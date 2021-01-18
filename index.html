@@ -36,7 +36,6 @@ width: 100%;">
 
         }
 
-       
         .todo_element{
             width:80%;
             word-break: break-all;
@@ -126,7 +125,16 @@ width: 100%;">
             color: ghostwhite;
             box-shadow:-1px 0px 3pt 0pt #0008ff;
         }
-        
+        #checkedtext{
+            background-color: aqua;
+            
+            
+        }
+        #checkedtext:hover{
+            background-color: rgba(32, 245, 227, 0.5);
+            border: black dotted 1px;
+
+        }
         
     </style>
 </head>
@@ -167,6 +175,7 @@ width: 100%;">
         var cleartag = document.getElementById("clearbutton");
         var clearbutton = cleartag.getElementsByTagName("button");
         var tolist = [];
+        var checkedtolist = [];
         
 
         // execution
@@ -188,6 +197,10 @@ width: 100%;">
                
                 <li>
                     <div class="todo_element" id = "editid${i}">
+                        <input type="checkbox" id = "checkbox" onclick = "checkboxfunc(${i})">
+                        <span id = "checkedtext" title = "you have completed this ">
+
+                        </span>
                         <span>${x}</span>
                     </div>
                     <div class = "create_relative">
@@ -243,6 +256,19 @@ width: 100%;">
             tolist.splice(index, 1);
             savingdata();
             sendingtolist(tolist);
+        }
+        function checkboxfunc(index){
+           var checkboxx = document.getElementById("checkbox");
+           var checkedtextt = document.getElementById("checkedtext");
+           if(checkboxx.checked ==true){
+                checkedtextt.innerHTML = "completed";
+                
+                savingdata();
+           }
+           else{
+            checkedtextt.innerHTML = "";
+           }
+            
         }
 
         function edit(index){
