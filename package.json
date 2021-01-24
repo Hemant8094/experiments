@@ -1,0 +1,21 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "todo app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hemantpython/experiments.git"
+  },
+  "author": "hemant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hemantpython/experiments/issues"
+  },
+  "homepage": "https://github.com/hemantpython/experiments#readme",
+  "dependencies": {
+  }
+}
