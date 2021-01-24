@@ -125,12 +125,12 @@ width: 100%;">
             color: ghostwhite;
             box-shadow:-1px 0px 3pt 0pt #0008ff;
         }
-        #checkedtext{
+        .checkedtext{
             background-color: aqua;
             
             
         }
-        #checkedtext:hover{
+        .checkedtext:hover{
             background-color: rgba(32, 245, 227, 0.5);
             border: black dotted 1px;
 
@@ -175,8 +175,7 @@ width: 100%;">
         var cleartag = document.getElementById("clearbutton");
         var clearbutton = cleartag.getElementsByTagName("button");
         var tolist = [];
-        var checkedtolist = [];
-        
+        var checked = {};        
 
         // execution
         showBlankScreen(); 
@@ -189,17 +188,19 @@ width: 100%;">
                 addTodo();      
             }
         }
+       
         function sendingtolist(as){
             showBlankScreen();
             var newar = '';
             as.forEach((x, i) => {
+                var ischecked = checked[i]
+
                 var htmll = ` 
-               
                 <li>
                     <div class="todo_element" id = "editid${i}">
-                        <input type="checkbox" id = "checkbox" onclick = "checkboxfunc(${i})">
-                        <span id = "checkedtext" title = "you have completed this ">
-
+                        <input type="checkbox" id = "checkbox${i}" onchange = "checkboxfunc(${i})" ${ischecked==true?"checked":"unchecked"}>
+                        <span id = "checkedtext${i}" class = "checkedtext" title = "you have completed this ">
+                           ${ischecked?"completed":""} 
                         </span>
                         <span>${x}</span>
                     </div>
@@ -210,7 +211,7 @@ width: 100%;">
                </li>`
                
                 newar = newar+ htmll;
-               
+                
             })
             ollist.innerHTML = newar;
         }
@@ -235,40 +236,56 @@ width: 100%;">
         }
         function savingdata(){
             localStorage.setItem("todosave",JSON.stringify(tolist));
+            localStorage.setItem("todochecked",JSON.stringify(checked));
         }
         function clearbuttton(){
             if(tolist !=[]){
                 tolist = [];
-                savingdata();
-                sendingtolist(tolist);
+                checked={};
             }
+            
+            sendingtolist(tolist);
+            savingdata();
         }
         function openfile(){
             var data = localStorage.getItem("todosave");
+            var _checked = localStorage.getItem("todochecked");
             if (data) {
                 tolist = JSON.parse(data);
-                sendingtolist(tolist);
             }
-
+            if (_checked) {
+                checked = JSON.parse(_checked);
+            }
+            sendingtolist(tolist);
         }
 
         function deleteTodo(index) {
             tolist.splice(index, 1);
-            savingdata();
+            deletechecked(index);
             sendingtolist(tolist);
+            savingdata();
         }
-        function checkboxfunc(index){
-           var checkboxx = document.getElementById("checkbox");
-           var checkedtextt = document.getElementById("checkedtext");
-           if(checkboxx.checked ==true){
+        function deletechecked(index){
+            if (checked[index]){
+
+                checked[index] = null;
+            }
+            if (tolist[index]==false){
+                checked[index] = null;
+            }
+        }
+        function checkboxfunc(i){
+            var checkboxx = document.getElementById(`checkbox${i}`);
+            var checkedtextt = document.getElementById(`checkedtext${i}`);
+
+            if (checkboxx.checked == true){
+                checked[i] = true;
                 checkedtextt.innerHTML = "completed";
-                
-                savingdata();
-           }
-           else{
-            checkedtextt.innerHTML = "";
-           }
-            
+            } else{
+                checked[i] = false;
+                checkedtextt.innerHTML = "";
+            }
+            savingdata();
         }
 
         function edit(index){
